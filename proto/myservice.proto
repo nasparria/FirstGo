@@ -1,0 +1,38 @@
+syntax = "proto3";
+package myapi;
+
+option go_package = "github.com/nasparria/FirstGo/GRPC/proto";
+
+message Order {
+    string account = 1;
+    string action = 2;
+    string average_price = 3;
+    string created_at = 4;
+    string fee = 5;
+    bool is_prime = 6;
+    string limit_price = 7;
+    string market_time = 8;
+    string notional = 9;
+    string order_id = 10;
+    string order_type = 11;
+    string quantity = 12;
+    string quantity_shares = 13;
+    string quantity_type = 14;
+    string status = 15;
+    string ticker = 16;
+    string trading_type = 17;
+    string updated_at = 18;
+    string user_id = 19;
+}
+
+service MyService {
+    rpc GetData (DataRequest) returns (DataResponse);
+}
+
+message DataRequest {
+    string query = 1;
+}
+
+message DataResponse {
+    Order result = 1;
+}
