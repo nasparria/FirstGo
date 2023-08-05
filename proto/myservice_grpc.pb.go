@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             v4.23.4
-// source: proto/myservice.proto
+// source: myservice.proto
 
 package proto
 
@@ -26,7 +26,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MyServiceClient interface {
-	GetData(ctx context.Context, in *DataRequest, opts ...grpc.CallOption) (*DataResponse, error)
+	GetData(ctx context.Context, in *DataRequest, opts ...grpc.CallOption) (*JsonResponse, error)
 }
 
 type myServiceClient struct {
@@ -37,8 +37,8 @@ func NewMyServiceClient(cc grpc.ClientConnInterface) MyServiceClient {
 	return &myServiceClient{cc}
 }
 
-func (c *myServiceClient) GetData(ctx context.Context, in *DataRequest, opts ...grpc.CallOption) (*DataResponse, error) {
-	out := new(DataResponse)
+func (c *myServiceClient) GetData(ctx context.Context, in *DataRequest, opts ...grpc.CallOption) (*JsonResponse, error) {
+	out := new(JsonResponse)
 	err := c.cc.Invoke(ctx, MyService_GetData_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -50,7 +50,7 @@ func (c *myServiceClient) GetData(ctx context.Context, in *DataRequest, opts ...
 // All implementations must embed UnimplementedMyServiceServer
 // for forward compatibility
 type MyServiceServer interface {
-	GetData(context.Context, *DataRequest) (*DataResponse, error)
+	GetData(context.Context, *DataRequest) (*JsonResponse, error)
 	mustEmbedUnimplementedMyServiceServer()
 }
 
@@ -58,7 +58,7 @@ type MyServiceServer interface {
 type UnimplementedMyServiceServer struct {
 }
 
-func (UnimplementedMyServiceServer) GetData(context.Context, *DataRequest) (*DataResponse, error) {
+func (UnimplementedMyServiceServer) GetData(context.Context, *DataRequest) (*JsonResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetData not implemented")
 }
 func (UnimplementedMyServiceServer) mustEmbedUnimplementedMyServiceServer() {}
@@ -105,5 +105,5 @@ var MyService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "proto/myservice.proto",
+	Metadata: "myservice.proto",
 }

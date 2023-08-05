@@ -1,7 +1,7 @@
 syntax = "proto3";
 package myapi;
 
-option go_package = "github.com/nasparria/FirstGo/GRPC/proto";
+option go_package = "github.com/nasparria/FirstGo/proto";
 
 message Order {
     string account = 1;
@@ -25,8 +25,12 @@ message Order {
     string user_id = 19;
 }
 
+message JsonResponse {
+    string json = 1;
+}
+
 service MyService {
-    rpc GetData (DataRequest) returns (DataResponse);
+    rpc GetData (DataRequest) returns (JsonResponse);
 }
 
 message DataRequest {
@@ -34,5 +38,5 @@ message DataRequest {
 }
 
 message DataResponse {
-    Order result = 1;
+    JsonResponse result = 1;
 }
